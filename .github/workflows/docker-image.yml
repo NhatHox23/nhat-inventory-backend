@@ -17,6 +17,6 @@ jobs:
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       - name: Check Flake8
-        run: docker-compose run app sh -c "flake8 ."
+        run: docker-compose run my-image-name:$(date +%s) sh -c "flake8 ."
       - name: Run Django Test
-        run: docker-compose run sh -c "python manage.py test"
+        run: docker-compose run my-image-name:$(date +%s) sh -c "python manage.py test"
