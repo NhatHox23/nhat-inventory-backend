@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Check Flake8
-        run: docker-compose run sh -c "flake8 ."
+        run: docker-compose run app sh -c "flake8 ."
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       - name: Run Django Test
