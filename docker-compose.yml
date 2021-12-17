@@ -21,7 +21,7 @@ services:
     hostname: postgre
     environment:
       - POSTGRES_DB=ninventory
-      - POSTGRES_USER=nhatadmin
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=ninventorypassword
 
 #python manage.py wait_for_db &&
