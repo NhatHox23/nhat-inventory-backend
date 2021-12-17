@@ -21,7 +21,4 @@ jobs:
       - name: Run Django Test
         run: docker-compose run app sh -c "python manage.py test"
       - name: Django Coverage action
-        uses: actions/python-django-coverage-gitHub-action@0.9
-        with:
-          django-app: 'ninventory'
-          minimum-coverage: '86'
+
