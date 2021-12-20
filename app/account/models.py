@@ -1,6 +1,6 @@
 from django.db import models
 
-from core.models import BaseModel
+from core.models import TimeStampModel
 
 from django.contrib.auth.models import AbstractBaseUser, \
     BaseUserManager, PermissionsMixin
@@ -42,7 +42,7 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **kwargs)
 
 
-class User(AbstractBaseUser, BaseModel, PermissionsMixin):
+class User(AbstractBaseUser, TimeStampModel, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
