@@ -10,7 +10,7 @@ class CategoryModelTest(TestCase):
         test_name = "Unit test name"
         category = Category.objects.create(
             name=test_name,
-            status=Category.AVALIABLE
+            status=Category.CategoryStatus.ACTIVE
         )
         self.assertEqual(str(category), test_name)
 

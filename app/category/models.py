@@ -16,5 +16,8 @@ class Category(BaseModel):
     status = models.IntegerField(choices=CategoryStatus.choices,
                                  default=CategoryStatus.ACTIVE)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         db_table = "category"
