@@ -13,4 +13,3 @@ class CategoryModelTest(TestCase):
             status=Category.CategoryStatus.ACTIVE
         )
         self.assertEqual(str(category), test_name)
-

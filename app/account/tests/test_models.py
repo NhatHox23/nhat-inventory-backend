@@ -10,4 +10,3 @@ class AccountModelsTest(TestCase):
             password="123456"
         )
         self.assertEqual(str(user), 'Test@nhat.com')
-
