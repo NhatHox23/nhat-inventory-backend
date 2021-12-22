@@ -20,5 +20,3 @@ jobs:
         run: docker-compose run app sh -c "flake8 ."
       - name: Run Django Test
         run: docker-compose run app sh -c "python manage.py test"
-      - name: Django Coverage action
-
