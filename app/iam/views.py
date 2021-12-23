@@ -2,11 +2,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from rest_framework import viewsets
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, \
-    DjangoModelPermissionsOrAnonReadOnly, \
-    IsAuthenticatedOrReadOnly
+from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 
 from django.contrib.auth.models import Permission, Group
 
@@ -45,4 +41,3 @@ class GroupViewSetApi(viewsets.ModelViewSet):
     permission_classes = [DjangoModelPermissionsOrAnonReadOnly, ]
     serializer_class = GroupSerializer
     queryset = Group.objects.all().order_by("id")
-

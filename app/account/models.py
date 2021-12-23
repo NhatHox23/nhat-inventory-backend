@@ -3,7 +3,7 @@ from django.db import models
 from core.models import TimeStampModel
 
 from django.contrib.auth.models import AbstractBaseUser, \
-    BaseUserManager, PermissionsMixin, Permission
+    BaseUserManager, PermissionsMixin
 
 from django.utils.translation import gettext_lazy as _
 
