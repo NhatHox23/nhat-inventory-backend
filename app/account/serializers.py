@@ -23,6 +23,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "is_staff": {"read_only": True}
         }
 
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        user.save()
+        return user
+
 
 class PermissionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,5 +43,3 @@ class GroupSerializer(serializers.ModelSerializer):
         #     "name": {"required": False}
         # }
         #
-
-
