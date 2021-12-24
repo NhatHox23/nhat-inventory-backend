@@ -30,9 +30,10 @@ ALLOWED_HOSTS = ["*", ]
 
 # Application definition
 NINVENTORY_APPS = [
+    'core',
     'account',
     'iam',
-    'core'
+    'category'
 ]
 THRIDPARTY_APPS = [
     'rest_framework',
