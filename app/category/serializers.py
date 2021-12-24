@@ -9,3 +9,7 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ("name", "status", "created_by", "updated_by")
+        extra_kwargs = {
+            "created_by": {"required": False},
+            "updated_by": {"required": False}
+        }

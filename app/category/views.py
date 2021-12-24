@@ -41,3 +41,30 @@ class CategoryViewSetAPI(viewsets.ModelViewSet):
         category = Category.objects.all()
         serializer = CategorySerializer(category, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema(
+        operation_id='Category Create API',
+        request_body=CategorySerializer,
+        responses={
+            status.HTTP_201_CREATED: openapi.Response(
+                description='OK', schema=CategorySerializer()),
+            status.HTTP_401_UNAUTHORIZED: openapi.Response(
+                description='UnAuthenticated'
+            ),
+            status.HTTP_403_FORBIDDEN: openapi.Response(
+                description='No Permission'
+            ),
+            status.HTTP_400_BAD_REQUEST: openapi.Response(
+                description='Bad Request'
+            )
+        }
+    )
+    def create(self, request, *args, **kwargs):
+        """Create Category API"""
+        user = request.user.id
+        data = request.data
+        data["created_by"] = user
+        serializer = CategorySerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
