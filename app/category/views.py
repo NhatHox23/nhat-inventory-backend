@@ -1,5 +1,3 @@
-from django.shortcuts import get_object_or_404
-
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
@@ -7,6 +5,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
 from core.utils.utils_permission import DjangoModelPermissionSafeMethod
+from core.utils.utils_query import get_or_404, get_or_none
 
 from .models import Category
 from .serializers import CategorySerializer
@@ -106,8 +105,35 @@ class CategoryViewSetAPI(viewsets.ModelViewSet):
         user = request.user.id
         data = request.data
         data['updated_by'] = user
-        category = get_object_or_404(Category, id=category_id)
+        category = get_or_404(Category, id=category_id)
         serializer = CategorySerializer(category, data=data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema(
+        operation_id='Category PUT API',
+        request_body=CategorySerializer(partial=False),
+        responses={
+            status.HTTP_200_OK: openapi.Response(
+                description='OK', schema=CategorySerializer(),
+            ),
+            status.HTTP_401_UNAUTHORIZED: openapi.Response(
+                description='UnAuthenticated'
+            ),
+            status.HTTP_403_FORBIDDEN: openapi.Response(
+                description='No Permission'
+            ),
+            status.HTTP_400_BAD_REQUEST: openapi.Response(
+                description='Bad Request'
+            )
+        }
+    )
+    def update(self, request, category_id, *args, **kwargs):
+        user = request.user.id
+        data = request.data
+        data["updated_by"] = user
+        category = get_or_none(Category, id=category_id)
+        if not category:
+            data["id"] = category_id
+            

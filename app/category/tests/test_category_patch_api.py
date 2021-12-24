@@ -33,6 +33,7 @@ class PublicCategoryPatchApiTest(TestCase):
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
+
 class PrivateCategoryPatchApiTest(TestCase):
     """Private test suits for Category Patch API"""
 
