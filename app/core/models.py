@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import IntegerChoices
 
 
 class TimeStampModel(models.Model):
@@ -19,3 +20,9 @@ class BaseModel(TimeStampModel):
 
     class Meta:
         abstract = True
+
+
+class StatusChoice(IntegerChoices):
+    ACTIVE = 1
+    IN_ACTIVE = 2
+    OUT_OF_STOCK = 3
