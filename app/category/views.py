@@ -72,3 +72,40 @@ class CategoryViewSetAPI(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @swagger_auto_schema(
+        operation_id="Category Patch API",
+        request_body=CategorySerializer(partial=True),
+        responses={
+            status.HTTP_200_OK: openapi.Response(
+                description="OK", schema=CategorySerializer(),
+            ),
+            status.HTTP_401_UNAUTHORIZED: openapi.Response(
+                description="UnAuthenticated"
+            ),
+            status.HTTP_403_FORBIDDEN: openapi.Response(
+                description="No Permission"
+            ),
+            status.HTTP_400_BAD_REQUEST: openapi.Response(
+                description="Bad Request"
+            ),
+            status.HTTP_404_NOT_FOUND: openapi.Response(
+                description="Not Found"
+            )
+        }
+    )
+    def partial_update(self, request, category_id, *args, **kwargs):
+        """Patch Category API
+        ### Description:
+            - API for patching category
+        ### Permission:
+            - Can change category
+        """
+        user = request.user.id
+        data = request.data
+        data['updated_by'] = user
+        category = Category.objects.get_or_404()
+        serializer = CategorySerializer(data=data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)

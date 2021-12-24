@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
 
+from category.models import Category
+
 
 def sample_super_group(*, user=None):
     """Create a full permission"""
@@ -20,3 +22,9 @@ def sample_user(*, email="UT@nhat.com", password="123456", name="Unit Test"):
         name=name
     )
     return user
+
+
+def sample_category(*, user=None):
+    """Create a sample category"""
+    category = Category.objects.create(name="Sample Category", created_by=user)
+    return category
