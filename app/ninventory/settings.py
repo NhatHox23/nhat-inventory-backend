@@ -29,6 +29,17 @@ DEBUG = True
 ALLOWED_HOSTS = ["*", ]
 
 # Application definition
+NINVENTORY_APPS = [
+    'account',
+    'iam',
+    'core'
+]
+THRIDPARTY_APPS = [
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'drf_yasg'
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,14 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'rest_framework_simplejwt',
-    'drf_yasg',
-    'core',
-    'account',
-    'category',
-    'iam',
+    *THRIDPARTY_APPS,
+    *NINVENTORY_APPS
 ]
 
 MIDDLEWARE = [
