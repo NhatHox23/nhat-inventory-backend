@@ -11,13 +11,7 @@ from .serializers import CategorySerializer
 
 
 class CategoryViewSetAPI(viewsets.ModelViewSet):
-    """Category ViewSet API
-    ### Description:
-        - Category ViewSet API
-
-    ### Permission:
-        - DjangoModelPermissionSafeMethod
-    """
+    """Category ViewSet API"""
     permission_classes = [DjangoModelPermissionSafeMethod, ]
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
@@ -37,7 +31,12 @@ class CategoryViewSetAPI(viewsets.ModelViewSet):
         }
     )
     def list(self, request, *args, **kwargs):
-        """List Category API"""
+        """List Category API
+        ### Description:
+            - API for listing category
+        ### Permission:
+            - Can view category
+        """
         category = Category.objects.all()
         serializer = CategorySerializer(category, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -60,7 +59,12 @@ class CategoryViewSetAPI(viewsets.ModelViewSet):
         }
     )
     def create(self, request, *args, **kwargs):
-        """Create Category API"""
+        """Create Category API
+        ### Description:
+            - API for creating category
+        ### Permission:
+            - Can add category
+        """
         user = request.user.id
         data = request.data
         data["created_by"] = user
