@@ -57,7 +57,7 @@ class PrivateCategoryPatchApiTest(TestCase):
         url = self.get_url(self.category.id)
         res = self.client.patch(path=url, data=payload, format='json')
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.updated_by, self.user.email)
+        self.assertEqual(res.data['updated_by'], self.user.id)
 
     def test_category_patch_403(self):
         """Test that category patch api got 403 (No Permission)"""
@@ -89,7 +89,7 @@ class PrivateCategoryPatchApiTest(TestCase):
         url = self.get_url(self.category.id)
         res = self.client.patch(path=url, data=payload, format='json')
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.updated_by, self.user.email)
+        self.assertEqual(res.data['updated_by'], self.user.id)
 
     def test_category_patch_404(self):
         """Test that category patch api got 404 (Not Found)"""

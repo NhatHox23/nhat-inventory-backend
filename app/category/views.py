@@ -1,3 +1,5 @@
+from django.shortcuts import get_object_or_404
+
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
@@ -104,8 +106,8 @@ class CategoryViewSetAPI(viewsets.ModelViewSet):
         user = request.user.id
         data = request.data
         data['updated_by'] = user
-        category = Category.objects.get_or_404()
-        serializer = CategorySerializer(data=data, partial=True)
+        category = get_object_or_404(Category, id=category_id)
+        serializer = CategorySerializer(category, data=data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)

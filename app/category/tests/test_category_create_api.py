@@ -44,7 +44,7 @@ class PrivateCategoryCreateApiTest(TestCase):
         res = self.client.post(path=CATEGORY_CREATE_URL, data=payload,
                                format="json")
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(res.created_by, self.user.email)
+        self.assertEqual(res.data['created_by'], self.user.id)
 
     def test_category_create_403(self):
         """Test that create category got 403 (No Permission)"""

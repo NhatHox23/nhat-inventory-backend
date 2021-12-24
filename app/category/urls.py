@@ -9,5 +9,7 @@ urlpatterns = [
          name='category-list'),
     path('create/', CategoryViewSetAPI.as_view({'post': 'create'}),
          name='category-create'),
-    path('patch/<int:category_id>', )
+    path('patch/<int:category_id>',
+         CategoryViewSetAPI.as_view({'patch': 'partial_update'}),
+         name='category-patch')
 ]
