@@ -11,5 +11,8 @@ urlpatterns = [
          name='category-create'),
     path('patch/<int:category_id>',
          CategoryViewSetAPI.as_view({'patch': 'partial_update'}),
-         name='category-patch')
+         name='category-patch'),
+    path('put/<int:category_id>',
+         CategoryViewSetAPI.as_view({'put': 'update'}),
+         name='category-put')
 ]

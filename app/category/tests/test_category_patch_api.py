@@ -7,8 +7,6 @@ from rest_framework.test import APIClient
 from core.utils.utils_test import sample_user, sample_super_group, \
     sample_category
 
-from category.models import Category
-
 
 class PublicCategoryPatchApiTest(TestCase):
     """Public test suits for Category Patch API"""
@@ -31,7 +29,6 @@ class PublicCategoryPatchApiTest(TestCase):
         url = self.get_url(self.category.id)
         res = self.client.patch(path=url, data=payload, format="json")
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
-
 
 
 class PrivateCategoryPatchApiTest(TestCase):

@@ -136,4 +136,12 @@ class CategoryViewSetAPI(viewsets.ModelViewSet):
         category = get_or_none(Category, id=category_id)
         if not category:
             data["id"] = category_id
-            
+            data["created_by"] = request.user.id
+            serializer = CategorySerializer(data=data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        serializer = CategorySerializer(category, data=data, partial=False)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
