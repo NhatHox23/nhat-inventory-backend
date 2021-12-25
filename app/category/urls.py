@@ -14,5 +14,8 @@ urlpatterns = [
          name='category-patch'),
     path('put/<int:category_id>',
          CategoryViewSetAPI.as_view({'put': 'update'}),
-         name='category-put')
+         name='category-put'),
+    path('delete/<int:category_id>',
+         CategoryViewSetAPI.as_view({'delete': 'delete'}),
+         name="category-delete")
 ]

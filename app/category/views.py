@@ -145,3 +145,29 @@ class CategoryViewSetAPI(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema(
+        operation_id="Category DELETE API",
+        responses={
+            status.HTTP_204_NO_CONTENT: openapi.Response(
+                description="Not Content"
+            ),
+            status.HTTP_401_UNAUTHORIZED: openapi.Response(
+                description="UnAuthenticated"
+            ),
+            status.HTTP_403_FORBIDDEN: openapi.Response(
+                description="No Permission"
+            ),
+            status.HTTP_404_NOT_FOUND: openapi.Response(
+                description="Not Found"
+            ),
+            status.HTTP_400_BAD_REQUEST: openapi.Response(
+                description="Bad Request"
+            )
+        }
+    )
+    def delete(self, request, category_id, *args, **kwargs):
+        category = get_or_404(Category, id=category_id)
+        category.delete()
+        return Response({"message": "Deleted"},
+                        status=status.HTTP_204_NO_CONTENT)
