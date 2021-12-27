@@ -45,4 +45,5 @@ urlpatterns = [
     path('account/', include('account.urls')),
     path('iam/', include("iam.urls")),
     path('category/', include('category.urls')),
+    path('product/', include('product.urls'))
 ]

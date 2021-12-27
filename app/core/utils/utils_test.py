@@ -3,6 +3,8 @@ from django.contrib.auth.models import Group, Permission
 
 from category.models import Category
 
+from product.models import Product
+
 
 def sample_super_group(*, user=None):
     """Create a full permission"""
@@ -24,7 +26,14 @@ def sample_user(*, email="UT@nhat.com", password="123456", name="Unit Test"):
     return user
 
 
-def sample_category(*, user=None):
+def sample_category(*, user=None, name='Sample Category', **kwargs):
     """Create a sample category"""
-    category = Category.objects.create(name="Sample Category", created_by=user)
+    category = Category.objects.create(name=name, created_by=user, **kwargs)
     return category
+
+
+def sample_product(*, user=None, name='Sample Product', category, **kwargs):
+    """Create a sample product"""
+    product = Product.objects.create(name=name, category=category,
+                                     created_by=user, **kwargs)
+    return product
