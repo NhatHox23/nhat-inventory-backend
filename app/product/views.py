@@ -6,6 +6,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
 from core.utils.utils_permission import DjangoModelPermissionSafeMethod
+from core.utils.utils_query import get_or_404
 
 from .models import Product
 from .serializers import ProductSerializer
@@ -79,3 +80,26 @@ class ProductViewSetAPI(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @swagger_auto_schema(
+        operation_id="Put Product API",
+        request_body=ProductSerializer,
+    )
+    def update(self, request, product_id, *args, **kwargs):
+        """
+        Put Product API
+
+        ### Description:
+            - This API serve the purpose of update(PUT) product
+
+        ### Permission:
+            - Can change Product
+        """
+        user = request.user.id
+        data = request.data
+        data["updated_by"] = user
+        product = get_or_404(Product, id=product_id)
+        serializer = ProductSerializer(product, data=data, partial=False)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
