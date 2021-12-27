@@ -84,6 +84,24 @@ class ProductViewSetAPI(viewsets.ModelViewSet):
     @swagger_auto_schema(
         operation_id="Put Product API",
         request_body=ProductSerializer,
+        responses={
+            status.HTTP_200_OK: openapi.Response(
+                description='OK',
+                schema=ProductSerializer()
+            ),
+            status.HTTP_401_UNAUTHORIZED: openapi.Response(
+                description='UnAuthenticated'
+            ),
+            status.HTTP_403_FORBIDDEN: openapi.Response(
+                description='No Permission'
+            ),
+            status.HTTP_404_NOT_FOUND: openapi.Response(
+                description='Not Found'
+            ),
+            status.HTTP_400_BAD_REQUEST: openapi.Response(
+                description='Bad Request'
+            )
+        }
     )
     def update(self, request, product_id, *args, **kwargs):
         """
@@ -100,6 +118,44 @@ class ProductViewSetAPI(viewsets.ModelViewSet):
         data["updated_by"] = user
         product = get_or_404(Product, id=product_id)
         serializer = ProductSerializer(product, data=data, partial=False)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema(
+        operation_id="Patch Product API",
+        request_body=ProductSerializer(partial=False),
+        response={
+            status.HTTP_200_OK: openapi.Response(
+                description='OK',
+                schema=ProductSerializer()
+            ),
+            status.HTTP_401_UNAUTHORIZED: openapi.Response(
+                description='Unauthenticated'
+            ),
+            status.HTTP_403_FORBIDDEN: openapi.Response(
+                description='No Permission'
+            ),
+            status.HTTP_404_NOT_FOUND: openapi.Response(
+                description='Not Found'
+            )
+        }
+    )
+    def partial_update(self, request, product_id, *args, **kwargs):
+        """
+        Patch Product API
+
+        ### Description:
+            - This API serve the purpose of update(PATCH) product
+
+        ### Permission:
+            - Can change Product
+        """
+        user = request.user.id
+        data = request.data
+        data['updated_by'] = user
+        product = get_or_404(Product, id=product_id)
+        serializer = ProductSerializer(product, data=data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)

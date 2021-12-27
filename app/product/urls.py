@@ -9,5 +9,8 @@ urlpatterns = [
     path('create/', ProductViewSetAPI.as_view({'post': 'create'}),
          name='product-create'),
     path('put/<int:product_id>', ProductViewSetAPI.as_view({'put': 'update'}),
-         name='product-put')
+         name='product-put'),
+    path('patch/<int:product_id>',
+         ProductViewSetAPI.as_view({'patch': 'partial_update'}),
+         name='product-patch')
 ]
