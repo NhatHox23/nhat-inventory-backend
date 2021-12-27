@@ -4,7 +4,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from core.utils.utils_test import sample_user, sample_super_group, \
+from core.utils.sample_test import sample_user, sample_super_group, \
     sample_category, sample_product
 
 PRODUCT_LIST_URL = reverse('product:product-list')
@@ -44,7 +44,7 @@ class PrivateProductListApiTest(TestCase):
         self.client.force_authenticate(user=self.superuser)
         res = self.client.get(PRODUCT_LIST_URL)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(res.data), 1)
+        self.assertEqual(len(res.data['results']), 1)
 
     def test_list_product_403(self):
         """Test list product got 403(No Permissions)"""

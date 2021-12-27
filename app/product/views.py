@@ -1,12 +1,13 @@
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.pagination import LimitOffsetPagination
 
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
-from core.utils.utils_permission import DjangoModelPermissionSafeMethod
-from core.utils.utils_query import get_or_404, get_or_none
+from core.utils.permission import DjangoModelPermissionSafeMethod
+from core.utils.query import get_or_404, get_or_none
 
 from .models import Product
 from .serializers import ProductSerializer
@@ -42,8 +43,10 @@ class ProductViewSetAPI(viewsets.ModelViewSet):
             - Can view Product
         """
         product = Product.objects.all()
-        serializer = ProductSerializer(product, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        paginator = LimitOffsetPagination()
+        page = paginator.paginate_queryset(product, request)
+        serializer = ProductSerializer(page, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
     @swagger_auto_schema(
         operation_id="Create Product API",

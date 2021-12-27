@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
-from core.utils.utils_permission import DjangoModelPermissionSafeMethod
-from core.utils.utils_query import get_or_404, get_or_none
+from core.utils.permission import DjangoModelPermissionSafeMethod
+from core.utils.query import get_or_404, get_or_none
 
 from .models import Category
 from .serializers import CategorySerializer

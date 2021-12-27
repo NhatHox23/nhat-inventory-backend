@@ -2,7 +2,7 @@ from django.db import IntegrityError
 from django.test import TestCase
 from product.models import Product
 
-from core.utils.utils_test import sample_user, sample_category
+from core.utils.sample_test import sample_user, sample_category
 
 
 class ProductModelTest(TestCase):

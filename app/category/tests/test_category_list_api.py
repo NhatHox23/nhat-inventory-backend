@@ -4,7 +4,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from core.utils.utils_test import sample_user, sample_super_group
+from core.utils.sample_test import sample_user, sample_super_group
 
 CATEGORY_LIST_URL = reverse('category:category-list')
 
