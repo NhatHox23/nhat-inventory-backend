@@ -33,7 +33,8 @@ NINVENTORY_APPS = [
     'core',
     'account',
     'iam',
-    'category'
+    'category',
+    'product',
 ]
 THRIDPARTY_APPS = [
     'rest_framework',
