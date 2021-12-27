@@ -6,7 +6,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
 from core.utils.utils_permission import DjangoModelPermissionSafeMethod
-from core.utils.utils_query import get_or_404
+from core.utils.utils_query import get_or_404, get_or_none
 
 from .models import Product
 from .serializers import ProductSerializer
@@ -159,3 +159,34 @@ class ProductViewSetAPI(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema(
+        operation_id='Delete Product API',
+        responses={
+            status.HTTP_204_NO_CONTENT: openapi.Response(
+                description='No Content'
+            ),
+            status.HTTP_401_UNAUTHORIZED: openapi.Response(
+                description='Unauthenticated'
+            ),
+            status.HTTP_403_FORBIDDEN: openapi.Response(
+                description='No Permission'
+            )
+        },
+    )
+    def delete(self, request, product_id, *args, **kwargs):
+        """
+        Delete Product API
+
+        ### Description:
+            - This API serve the purpose of deleting product
+
+        ### Permission:
+            - Can delete Product
+
+        """
+        product = get_or_none(Product, id=product_id)
+        if product:
+            product.delete()
+        return Response({"message": "No content"},
+                        status=status.HTTP_204_NO_CONTENT)

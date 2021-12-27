@@ -12,5 +12,7 @@ urlpatterns = [
          name='product-put'),
     path('patch/<int:product_id>',
          ProductViewSetAPI.as_view({'patch': 'partial_update'}),
-         name='product-patch')
+         name='product-patch'),
+    path('delete/<int:product_id>',
+         ProductViewSetAPI.as_view({'delete': 'delete'}), name='product-delete')
 ]
