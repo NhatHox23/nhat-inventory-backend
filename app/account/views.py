@@ -69,9 +69,7 @@ class UserViewSetApi(viewsets.ModelViewSet):
             'domain': current_site.domain,
             'to_email': [user.email],
         }
-
         Util.send_mail(data)
-
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
