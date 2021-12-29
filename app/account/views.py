@@ -3,14 +3,19 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .serializers import UserProfileSerializer, UserCreationSerializer
-
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from .models import User
-from .utils import Util
+
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
+
+import jwt
+
+from django.conf import settings
+
+from .models import User
+from .utils import Util
+from .serializers import UserProfileSerializer, UserCreationSerializer
 
 
 class UserViewSetApi(viewsets.ModelViewSet):
@@ -76,4 +81,17 @@ class UserViewSetApi(viewsets.ModelViewSet):
 class VerifyEmail(viewsets.ModelViewSet):
 
     def list(self, request):
-        pass
+        user_token = request.query_params.get('token', None)
+        try:
+            payload = jwt.decode(user_token, settings.SIMPLE_JWT[
+                'SIGNING_KEY'], settings.SIMPLE_JWT['ALGORITHM'])
+            user = User.objects.get(id=payload['user_id'])
+            user.is_active = True
+            user.save()
+            return Response({user.email: "Is activated"},
+                            status=status.HTTP_200_OK)
+        except (jwt.InvalidSignatureError,
+                jwt.DecodeError,
+                jwt.ExpiredSignatureError, User.DoesNotExist):
+            return Response({'message': 'invalid token or link'},
+                            status=status.HTTP_400_BAD_REQUEST)

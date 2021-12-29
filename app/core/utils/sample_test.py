@@ -16,12 +16,14 @@ def sample_super_group(*, user=None):
     return group
 
 
-def sample_user(*, email="UT@nhat.com", password="123456", name="Unit Test"):
+def sample_user(*, email="UT@nhat.com", password="123456", name="Unit Test",
+                is_active=True):
     """Create a sample user"""
     user = get_user_model().objects.create_user(
         email=email,
         password=password,
-        name=name
+        name=name,
+        is_active=is_active
     )
     return user
 
