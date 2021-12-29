@@ -29,6 +29,17 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return user
 
 
+class UserCreationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('email', 'password', 'name')
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        user.save()
+        return user
+
+
 class PermissionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Permission
