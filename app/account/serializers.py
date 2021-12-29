@@ -17,10 +17,12 @@ class UserAuthSerializer(serializers.Serializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = "__all__"
+        fields = ("email", "name", "password", "is_staff", "is_active")
         extra_kwargs = {
             "is_superuser": {"read_only": True},
-            "is_staff": {"read_only": True}
+            "is_staff": {"read_only": True},
+            "email": {"read_only": True},
+            "password": {"read_only": True}
         }
 
     def create(self, validated_data):
